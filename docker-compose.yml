@@ -1,0 +1,25 @@
+version: '3'
+services:
+  deb-icecast:
+    image: gh4r66j56j/deb-icecast
+    ports:
+     - "8000:8000"
+    networks:
+      lan:
+        ipv4_address: 172.11.0.10
+  ezstream:
+    build: ezstream
+    links:
+     - deb-icecast:gh4r66j56j
+    volumes:
+     - /mnt/music:/mnt/music
+    networks:
+      lan:
+        ipv4_address: 172.11.0.11
+networks:
+  lan:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+       - subnet: 172.11.0.14/29
